@@ -1,0 +1,11 @@
+dndbeyond:
+  api:
+    monster: https://monster-service.dndbeyond.com/v1/
+    auth: https://auth-service.dndbeyond.com/v1/
+
+spring:
+  datasource:
+    username: dynamic-encounter-generator
+    password: dynamic-encounter-generator
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/dynamic-encounter-generator
