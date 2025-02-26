@@ -12,24 +12,48 @@ class Monster(
     val description: String,
     val size: Size,
     val type: MonsterType,
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
     val possibleAlignments: Set<Alignment>,
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
     val stats: Map<StatType, Long>,
     val armorClass: Int,
     val challengeRating: Int,
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
     val environments: Set<Environment>,
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
     val languages: Set<Language>,
 ) {
+
+    companion object {
+        fun fromMonster(original: Monster, updated: Monster): Monster {
+            return Monster(
+                updated.externalId,
+                updated.name,
+                updated.url,
+                updated.avatarUrl,
+                updated.description,
+                updated.size,
+                updated.type,
+                updated.possibleAlignments,
+                updated.stats,
+                updated.armorClass,
+                updated.challengeRating,
+                updated.environments,
+                updated.languages
+            ).apply {
+                this.id = original.id
+            }
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0
+    var id: Long = 0
+        private set
 }
 
 enum class MonsterType {
