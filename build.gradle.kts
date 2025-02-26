@@ -45,6 +45,10 @@ subprojects {
 
     dependencies {
         implementation("io.github.microutils:kotlin-logging:3.0.5")
+
+        testImplementation("org.junit.jupiter:junit-jupiter-api")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
         constraints {
             implementation("io.swagger.core.v3:swagger-annotations:2.2.28")
             implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -59,6 +63,8 @@ subprojects {
 
             // kotlinx serialization
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+            // jsoup...
+            implementation("org.jsoup:jsoup:1.18.3")
 
             // cloud
             implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
@@ -71,12 +77,14 @@ subprojects {
             runtimeOnly("org.postgresql:postgresql")
             testImplementation("org.springframework.boot:spring-boot-starter-test")
             testImplementation("org.springframework.boot:spring-boot-testcontainers")
-            testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
             testImplementation("org.springframework.security:spring-security-test")
             testImplementation("org.testcontainers:junit-jupiter")
             testImplementation("org.testcontainers:postgresql")
-            testRuntimeOnly("org.junit.platform:junit-platform-launcher")
         }
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
