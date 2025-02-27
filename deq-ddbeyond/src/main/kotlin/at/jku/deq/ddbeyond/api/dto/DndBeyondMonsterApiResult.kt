@@ -55,7 +55,7 @@ internal data class DndBeyondMonster(
     val id: Long,
     val entityTypeId: Long,
     val name: String,
-    val alignmentId: Long,
+    val alignmentId: Long?,
     val sizeId: Long,
     val typeId: Long,
     val armorClass: Long,

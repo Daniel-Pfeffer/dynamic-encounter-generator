@@ -32,6 +32,7 @@ internal class MonsterServiceImpl(
             1,
             allPages
         )).filter { it.isReleased /*as far as I've seen if isReleased then user has the content*/ }
+            .filter { !it.isLegacy }
     }
 
     private fun callPaginated(page: Int, totalPages: Int): List<DndBeyondMonster> {

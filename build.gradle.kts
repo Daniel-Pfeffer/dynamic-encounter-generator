@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
     kotlin("plugin.serialization") version "1.9.25"
+    `java-test-fixtures`
 }
 
 group = "at.jku"
@@ -30,7 +31,7 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-
+    apply(plugin = "java-test-fixtures")
 
     repositories {
         mavenCentral()
@@ -45,6 +46,15 @@ subprojects {
 
     dependencies {
         implementation("io.github.microutils:kotlin-logging:3.0.5")
+
+
+        // mockk dependency
+        testImplementation("io.mockk:mockk:1.13.16")
+        testImplementation("org.assertj:assertj-core:3.27.3")
+
+        testImplementation("org.junit.jupiter:junit-jupiter-api")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
         constraints {
             implementation("io.swagger.core.v3:swagger-annotations:2.2.28")
             implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -59,6 +69,8 @@ subprojects {
 
             // kotlinx serialization
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+            // jsoup...
+            implementation("org.jsoup:jsoup:1.18.3")
 
             // cloud
             implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
@@ -71,12 +83,16 @@ subprojects {
             runtimeOnly("org.postgresql:postgresql")
             testImplementation("org.springframework.boot:spring-boot-starter-test")
             testImplementation("org.springframework.boot:spring-boot-testcontainers")
-            testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
             testImplementation("org.springframework.security:spring-security-test")
             testImplementation("org.testcontainers:junit-jupiter")
             testImplementation("org.testcontainers:postgresql")
-            testRuntimeOnly("org.junit.platform:junit-platform-launcher")
         }
+    }
+
+
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 

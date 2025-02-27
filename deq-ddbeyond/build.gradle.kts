@@ -4,5 +4,6 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
 
+    testFixturesImplementation(project(":deq-testFixtures"))
     testImplementation(kotlin("test"))
 }
