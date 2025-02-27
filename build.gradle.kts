@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
     kotlin("plugin.serialization") version "1.9.25"
+    `java-test-fixtures`
 }
 
 group = "at.jku"
@@ -30,7 +31,7 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-
+    apply(plugin = "java-test-fixtures")
 
     repositories {
         mavenCentral()
@@ -45,6 +46,11 @@ subprojects {
 
     dependencies {
         implementation("io.github.microutils:kotlin-logging:3.0.5")
+
+
+        // mockk dependency
+        testImplementation("io.mockk:mockk:1.13.16")
+        testImplementation("org.assertj:assertj-core:3.27.3")
 
         testImplementation("org.junit.jupiter:junit-jupiter-api")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -82,6 +88,8 @@ subprojects {
             testImplementation("org.testcontainers:postgresql")
         }
     }
+
+
 
     tasks.withType<Test> {
         useJUnitPlatform()

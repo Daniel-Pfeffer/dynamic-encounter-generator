@@ -3,6 +3,8 @@ package at.jku.deq.ddbeyond.mapper
 import at.jku.deq.ddbeyond.api.dto.DndBeyondMonster
 import at.jku.deq.ddbeyond.dto.*
 
+
+// TODO: add action syncing
 internal fun DndBeyondMonster.toDeqMonster() = DeqMonster(
     id = this.id,
     name = this.name,

@@ -23,10 +23,11 @@ internal class SyncService(
         val allDndBeyondMonster = monsterservice.getAllMonsters()
 
         val existingMonsters = monsterRepository.findAll()
-        val existingExternalIds = existingMonsters.map { it.externalId }.toSet()
         val existingMonstersByExternalId = existingMonsters.associateBy { it.externalId }
+        val allDndBeyondMonsterExternalId = allDndBeyondMonster.map { it.id }.toSet()
 
-        val toRemoveId = allDndBeyondMonster.filter { it.id !in existingExternalIds }.mapTo(HashSet()) { it.id }
+        // TODO: add manual monster and do not delete those
+        val toRemove = existingMonsters.filter { it.externalId !in allDndBeyondMonsterExternalId }
 
         val toSave = allDndBeyondMonster.map {
             val existingMonster = existingMonstersByExternalId[it.id]
@@ -34,9 +35,9 @@ internal class SyncService(
                 Monster.fromMonster(existingMonster, it.toDomainMonster())
             } else it.toDomainMonster()
         }
-        LOG.info { "Removed ${toRemoveId.size} monsters" }
+        LOG.info { "Removed ${toRemove.size} monsters" }
         LOG.info { "Saved ${toSave.size} new or updated monsters" }
         monsterRepository.saveAll(toSave)
-        monsterRepository.deleteAllByExternalId(toRemoveId)
+        monsterRepository.deleteAll(toRemove)
     }
 }

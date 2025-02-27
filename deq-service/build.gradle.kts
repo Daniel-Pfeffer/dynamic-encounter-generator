@@ -14,6 +14,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
 
+    testImplementation(testFixtures(project(":deq-domain")))
+    testImplementation(testFixtures(project(":deq-ddbeyond")))
+    testImplementation(project(":deq-testFixtures"))
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
