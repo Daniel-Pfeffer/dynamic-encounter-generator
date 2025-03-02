@@ -1,12 +1,8 @@
 package at.jku.deq.service.service
 
 import at.jku.deq.api.dto.CreateMonsterDto
-import at.jku.deq.api.dto.MonsterDto
-import at.jku.deq.api.dto.Page
 import at.jku.deq.domain.entity.Monster
 import at.jku.deq.domain.repository.MonsterRepository
-import at.jku.deq.service.mapper.toCommonsPage
-import at.jku.deq.service.mapper.toDto
 import at.jku.deq.service.mapper.toMonster
 import mu.KotlinLogging
 import org.springframework.data.domain.Pageable
@@ -23,31 +19,29 @@ internal class MonsterService(
     }
 
     @Transactional(readOnly = true)
-    fun getMonsters(pageable: Pageable): Page<MonsterDto> {
+    fun getMonsters(pageable: Pageable): org.springframework.data.domain.Page<Monster> {
         LOG.trace { "Called getMonsters with $pageable" }
-        return monsterRepository.findAll(pageable).toCommonsPage {
-            it.toDto()
-        }
+        return monsterRepository.findAll(pageable)
     }
 
     @Transactional(readOnly = true)
-    fun getMonsterById(id: Long): MonsterDto {
+    fun getMonsterById(id: Long): Monster {
         LOG.trace { "Called getMonsterById with $id" }
         val monster = monsterRepository.getReferenceById(id)
 
-        return monster.toDto()
+        return monster
     }
 
     @Transactional
-    fun createMonster(monster: CreateMonsterDto): MonsterDto {
+    fun createMonster(monster: CreateMonsterDto): Monster {
         LOG.trace { "Called createMonster for ${monster.name}" }
         val newMonster = monsterRepository.save(monster.toMonster())
 
-        return newMonster.toDto()
+        return newMonster
     }
 
     @Transactional
-    fun updateMonster(id: Long, monster: CreateMonsterDto): MonsterDto {
+    fun updateMonster(id: Long, monster: CreateMonsterDto): Monster {
         LOG.trace { "Called updateMonster for $id" }
         val dbMonster = monsterRepository.getReferenceById(id)
 
@@ -60,7 +54,6 @@ internal class MonsterService(
         val reallyNewMonster = monsterRepository.save(Monster.fromMonster(dbMonster, newMonster))
 
         return reallyNewMonster
-            .toDto()
     }
 
     @Transactional

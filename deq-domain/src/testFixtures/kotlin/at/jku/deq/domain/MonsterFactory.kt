@@ -42,5 +42,3 @@ class MonsterFactory(post: (Monster) -> Monster = { it }) : AbstractFactory<Mons
         )
     }
 }
-
-
