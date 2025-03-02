@@ -18,6 +18,7 @@ class MonsterFactory(post: (Monster) -> Monster = { it }) : AbstractFactory<Mons
         environments: Set<Environment> = emptySet(),
         languages: Set<Language> = emptySet(),
         possibleAlignments: Set<Alignment> = emptySet(),
+        source: Monster.Source = Monster.Source.MANUAL,
         objectCustomizer: Monster.() -> Unit = { }
     ): Monster {
         return createInternal(
@@ -35,7 +36,8 @@ class MonsterFactory(post: (Monster) -> Monster = { it }) : AbstractFactory<Mons
                 challengeRating = challengeRating,
                 environments = environments,
                 languages = languages,
-                possibleAlignments = possibleAlignments
+                possibleAlignments = possibleAlignments,
+                source = source
             )
         )
     }
