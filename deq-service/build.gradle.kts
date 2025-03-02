@@ -16,6 +16,7 @@ dependencies {
 
     testImplementation(testFixtures(project(":deq-domain")))
     testImplementation(testFixtures(project(":deq-ddbeyond")))
+    testImplementation(testFixtures(project(":deq-api")))
     testImplementation(project(":deq-testFixtures"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
