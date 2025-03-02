@@ -3,8 +3,8 @@ package at.jku.deq.service.dto
 import at.jku.deq.api.dto.CreateMonsterDto
 import at.jku.deq.api.dto.MonsterDto
 import at.jku.deq.api.dto.Page
-import at.jku.deq.api.dto.Pageable
 import at.jku.deq.service.service.MonsterService
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,18 +16,22 @@ internal class MonsterDtoServiceImpl(
     }
 
     override fun getMonsters(pageable: Pageable): Page<MonsterDto> {
-        TODO("Not yet implemented")
+        return monsterService.getMonsters(pageable)
     }
 
     override fun createOrUpdateMonster(monster: CreateMonsterDto): MonsterDto {
-        TODO("Not yet implemented")
+        return if (monster.id == null) {
+            monsterService.createMonster(monster)
+        } else {
+            monsterService.updateMonster(monster.id!!, monster)
+        }
     }
 
     override fun updateMonster(id: Long, monster: CreateMonsterDto): MonsterDto {
-        TODO("Not yet implemented")
+        return monsterService.updateMonster(id, monster)
     }
 
     override fun deleteMonster(id: Long) {
-        TODO("Not yet implemented")
+        monsterService.deleteMonster(id)
     }
 }

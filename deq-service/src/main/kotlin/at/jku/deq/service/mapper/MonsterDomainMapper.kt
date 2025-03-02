@@ -17,6 +17,7 @@ fun DeqMonster.toDomainMonster(): Monster = Monster(
     challengeRating = challengeRatingId.toInt(),
     languages = languages.map { it.toDomainLanguage() }.toSet(),
     environments = environments.map { it.toDomainEnvironment() }.toSet(),
+    source = Monster.Source.EXTERNAL
 )
 
 fun Map<DDBStatType, Long>.toDomainStats(): Map<StatType, Long> = mapKeys { it.key.toDomainStatType() }

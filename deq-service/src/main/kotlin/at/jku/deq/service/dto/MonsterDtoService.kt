@@ -3,7 +3,7 @@ package at.jku.deq.service.dto
 import at.jku.deq.api.dto.CreateMonsterDto
 import at.jku.deq.api.dto.MonsterDto
 import at.jku.deq.api.dto.Page
-import at.jku.deq.api.dto.Pageable
+import org.springframework.data.domain.Pageable
 
 interface MonsterDtoService {
     fun getMonsterById(id: Long): MonsterDto

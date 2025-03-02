@@ -16,10 +16,10 @@ interface MonsterApi {
     ): Page<MonsterDto>
 
     @PostMapping("monsters")
-    fun createOrUpdateMonster(monster: CreateMonsterDto): MonsterDto
+    fun createOrUpdateMonster(@RequestBody monster: CreateMonsterDto): MonsterDto
 
     @PostMapping("monsters/{id}")
-    fun updateMonster(@PathVariable id: Long, monster: CreateMonsterDto): MonsterDto
+    fun updateMonster(@PathVariable id: Long, @RequestBody monster: CreateMonsterDto): MonsterDto
 
     @DeleteMapping("monsters/{id}")
     fun deleteMonster(@PathVariable id: Long)

@@ -1,14 +1,18 @@
 package at.jku.deq.domain.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcType
+import org.hibernate.dialect.PostgreSQLEnumJdbcType
 
 @Entity
 class Monster(
-    @Column(unique = true)
-    val externalId: Long,
+    @Column(unique = true, nullable = true)
+    val externalId: Long?,
     val name: String,
-    val url: String,
-    val avatarUrl: String,
+    @Column(nullable = true)
+    val url: String?,
+    @Column(nullable = true)
+    val avatarUrl: String?,
     val description: String,
     val size: Size,
     val type: MonsterType,
@@ -26,7 +30,14 @@ class Monster(
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
     val languages: Set<Language>,
+    @Enumerated
+    @JdbcType(PostgreSQLEnumJdbcType::class)
+    val source: Source,
 ) {
+
+    enum class Source {
+        EXTERNAL, MANUAL
+    }
 
     companion object {
         fun fromMonster(original: Monster, updated: Monster): Monster {
@@ -43,7 +54,8 @@ class Monster(
                 updated.armorClass,
                 updated.challengeRating,
                 updated.environments,
-                updated.languages
+                updated.languages,
+                updated.source,
             ).apply {
                 this.id = original.id
             }

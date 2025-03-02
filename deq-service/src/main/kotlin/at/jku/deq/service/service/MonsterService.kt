@@ -3,12 +3,15 @@ package at.jku.deq.service.service
 import at.jku.deq.api.dto.CreateMonsterDto
 import at.jku.deq.api.dto.MonsterDto
 import at.jku.deq.api.dto.Page
+import at.jku.deq.domain.entity.Monster
 import at.jku.deq.domain.repository.MonsterRepository
+import at.jku.deq.service.mapper.toCommonsPage
 import at.jku.deq.service.mapper.toDto
+import at.jku.deq.service.mapper.toMonster
 import mu.KotlinLogging
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 internal class MonsterService(
@@ -17,38 +20,56 @@ internal class MonsterService(
 
     companion object {
         private val LOG = KotlinLogging.logger {}
-
-        private val DEFAULT_SORT = Sort.by(Sort.Order.desc("id"))
     }
 
-    fun getMonsters(): Page<MonsterDto> {
-        return monsterRepository.findAll(Pageable.unpaged(DEFAULT_SORT)).toCommonsPage {
+    @Transactional(readOnly = true)
+    fun getMonsters(pageable: Pageable): Page<MonsterDto> {
+        LOG.trace { "Called getMonsters with $pageable" }
+        return monsterRepository.findAll(pageable).toCommonsPage {
             it.toDto()
         }
     }
 
-    fun <T, X> org.springframework.data.domain.Page<T>.toCommonsPage(contentMapper: (T) -> X): Page<X> {
-        return Page.of(content.map(contentMapper), number.toLong(), totalElements)
-    }
-
-
+    @Transactional(readOnly = true)
     fun getMonsterById(id: Long): MonsterDto {
+        LOG.trace { "Called getMonsterById with $id" }
         val monster = monsterRepository.getReferenceById(id)
 
         return monster.toDto()
     }
 
+    @Transactional
     fun createMonster(monster: CreateMonsterDto): MonsterDto {
-        TODO()
+        LOG.trace { "Called createMonster for ${monster.name}" }
+        val newMonster = monsterRepository.save(monster.toMonster())
+
+        return newMonster.toDto()
     }
 
+    @Transactional
     fun updateMonster(id: Long, monster: CreateMonsterDto): MonsterDto {
-        val monster = monsterRepository.getReferenceById(id)
+        LOG.trace { "Called updateMonster for $id" }
+        val dbMonster = monsterRepository.getReferenceById(id)
 
-        return monster.toDto()
+        // if monster is external, we can't update it
+        if (dbMonster.source == Monster.Source.EXTERNAL)
+            throw IllegalArgumentException("Can't update external monster")
+
+        val newMonster = monster.toMonster()
+
+        val reallyNewMonster = monsterRepository.save(Monster.fromMonster(dbMonster, newMonster))
+
+        return reallyNewMonster
+            .toDto()
     }
 
+    @Transactional
     fun deleteMonster(id: Long) {
-        monsterRepository.deleteById(id)
+        LOG.trace { "Called deleteMonster for $id" }
+        val monster = monsterRepository.getReferenceById(id)
+        if (monster.source == Monster.Source.EXTERNAL)
+            throw IllegalArgumentException("Can't delete external monster")
+
+        monsterRepository.delete(monster)
     }
 }
