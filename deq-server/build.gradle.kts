@@ -13,6 +13,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.springframework.boot:spring-boot-starter-json")
     }
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }

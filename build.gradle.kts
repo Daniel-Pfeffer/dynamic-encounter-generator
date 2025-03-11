@@ -57,6 +57,7 @@ subprojects {
 
         constraints {
             implementation("io.swagger.core.v3:swagger-annotations:2.2.28")
+            implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
             implementation("org.springframework.boot:spring-boot-starter-actuator")
             implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
             implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -101,21 +102,6 @@ kotlin {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
 }
-
-/*allOpen {
-    annotation("jakarta.persistence.Entity")
-    annotation("jakarta.persistence.MappedSuperclass")
-    annotation("jakarta.persistence.Embeddable")
-}*/
-
-/*
-dependencies {
-    constraints {
-
-    }
-}
-*/
-
 
 tasks.withType<Test> {
     useJUnitPlatform()

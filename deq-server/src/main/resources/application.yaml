@@ -3,8 +3,6 @@ dndbeyond:
     monster: https://monster-service.dndbeyond.com/v1/
     auth: https://auth-service.dndbeyond.com/v1/
 
-
-
 spring:
   datasource:
     username: dynamic-encounter-generator
