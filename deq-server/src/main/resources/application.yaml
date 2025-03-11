@@ -4,6 +4,7 @@ dndbeyond:
     auth: https://auth-service.dndbeyond.com/v1/
 
 
+
 spring:
   datasource:
     username: dynamic-encounter-generator
@@ -15,3 +16,143 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: false
+deq:
+  xp:
+    # here be dragons, based on 2024 MM, p. 8
+    xp-per-cr-id:
+      "1": 10 # 0
+      "2": 25 # 1/8
+      "3": 50 # 1/4
+      "4": 100 # 1/2
+      "5": 200 # 1 -> onwards
+      "6": 450
+      "7": 700
+      "8": 1100
+      "9": 1800
+      "10": 2300
+      "11": 2900
+      "12": 3900
+      "13": 5000
+      "14": 5900
+      "15": 7200
+      "16": 8400
+      "17": 10000
+      "18": 11500
+      "19": 13000
+      "20": 15000
+      "21": 18000
+      "22": 20000
+      "23": 22000
+      "24": 25000
+      "25": 33000
+      "26": 41000
+      "27": 50000
+      "28": 62000
+      "29": 75000
+      "30": 90000
+      "31": 105000
+      "32": 120000
+      "33": 135000
+      "34": 155000
+    # here be dragons 2, based on 2024 DMG, p.115
+    encounter-difficulty:
+      - party-level: 1
+        difficulty:
+          Low: 50
+          Moderate: 75
+          High: 100
+      - party-level: 2
+        difficulty:
+          Low: 100
+          Moderate: 150
+          High: 200
+      - party-level: 3
+        difficulty:
+          Low: 150
+          Moderate: 225
+          High: 400
+      - party-level: 4
+        difficulty:
+          Low: 250
+          Moderate: 375
+          High: 500
+      - party-level: 5
+        difficulty:
+          Low: 500
+          Moderate: 750
+          High: 1100
+      - party-level: 6
+        difficulty:
+          Low: 600
+          Moderate: 1000
+          High: 1400
+      - party-level: 7
+        difficulty:
+          Low: 750
+          Moderate: 1300
+          High: 1700
+      - party-level: 8
+        difficulty:
+          Low: 1000
+          Moderate: 1700
+          High: 2100
+      - party-level: 9
+        difficulty:
+          Low: 1300
+          Moderate: 2000
+          High: 2600
+      - party-level: 10
+        difficulty:
+          Low: 1600
+          Moderate: 2300
+          High: 3100
+      - party-level: 11
+        difficulty:
+          Low: 1900
+          Moderate: 2900
+          High: 4100
+      - party-level: 12
+        difficulty:
+          Low: 2200
+          Moderate: 3700
+          High: 4700
+      - party-level: 13
+        difficulty:
+          Low: 2600
+          Moderate: 4200
+          High: 5400
+      - party-level: 14
+        difficulty:
+          Low: 2900
+          Moderate: 4900
+          High: 6200
+      - party-level: 15
+        difficulty:
+          Low: 3300
+          Moderate: 5400
+          High: 7800
+      - party-level: 16
+        difficulty:
+          Low: 3800
+          Moderate: 6100
+          High: 9800
+      - party-level: 17
+        difficulty:
+          Low: 4500
+          Moderate: 7200
+          High: 11700
+      - party-level: 18
+        difficulty:
+          Low: 5000
+          Moderate: 8700
+          High: 14200
+      - party-level: 19
+        difficulty:
+          Low: 5500
+          Moderate: 10700
+          High: 17200
+      - party-level: 20
+        difficulty:
+          Low: 6400
+          Moderate: 13200
+          High: 22000

@@ -12,13 +12,14 @@ class MonsterDtoFactory(
         url: String? = null,
         avatarUrl: String? = null,
         description: String = "I am a Monster",
-        size: String = "MEDIUM",
-        alignment: String = "NEUTRAL",
+        size: Size = Size.MEDIUM,
+        alignments: Set<Alignment> = setOf(Alignment.NEUTRAL),
         stats: StatDto = statDtoFactory.create(),
         armorClass: Int = 10,
         challengeRatingId: Int = 1,
-        environments: Set<String> = emptySet(),
+        environments: Set<Environment> = emptySet(),
         languages: Set<String> = emptySet(),
+        type: MonsterType = MonsterType.BEAST,
     ): MonsterDto {
         return createInternal(
             {}, MonsterDto(
@@ -28,13 +29,14 @@ class MonsterDtoFactory(
                 avatarUrl = avatarUrl,
                 description = description,
                 size = size,
-                alignment = alignment,
+                alignments = alignments,
                 stats = stats,
                 armorClass = armorClass,
                 challengeRatingId = challengeRatingId,
                 xp = challengeRatingId * 100L,
                 environments = environments,
-                languages = languages
+                languages = languages,
+                type = type,
             )
         )
     }

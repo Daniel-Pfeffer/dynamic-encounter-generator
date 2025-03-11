@@ -5,6 +5,7 @@ import at.jku.deq.domain.entity.Monster
 import at.jku.deq.domain.repository.MonsterRepository
 import at.jku.deq.service.mapper.toMonster
 import mu.KotlinLogging
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +20,7 @@ internal class MonsterService(
     }
 
     @Transactional(readOnly = true)
-    fun getMonsters(pageable: Pageable): org.springframework.data.domain.Page<Monster> {
+    fun getMonsters(pageable: Pageable): Page<Monster> {
         LOG.trace { "Called getMonsters with $pageable" }
         return monsterRepository.findAll(pageable)
     }

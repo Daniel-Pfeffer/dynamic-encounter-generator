@@ -18,7 +18,7 @@ class MonsterServiceTest {
         every {
             save(any())
         } returnsArgument 0
-        every { delete(any()) } just runs
+        every { delete(any<Monster>()) } just runs
     }
     private val monsterService = MonsterService(monsterRepository)
 
@@ -125,7 +125,7 @@ class MonsterServiceTest {
             // Then
             verify(exactly = 1) {
                 monsterRepository.getReferenceById(id)
-                monsterRepository.delete(withArg {
+                monsterRepository.delete(withArg<Monster> {
                     assertThat(it)
                         .usingRecursiveComparison()
                         .comparingOnlyFields(Monster::id.name, Monster::name.name, Monster::description.name)

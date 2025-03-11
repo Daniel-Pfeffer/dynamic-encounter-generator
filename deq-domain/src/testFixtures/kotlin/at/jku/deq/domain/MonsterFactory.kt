@@ -5,7 +5,7 @@ import at.jku.deq.shared.AbstractFactory
 
 class MonsterFactory(post: (Monster) -> Monster = { it }) : AbstractFactory<Monster>(post) {
     fun create(
-        externalId: Long = 1L,
+        externalId: Long? = null,
         name: String = "Monster",
         url: String = "http://monster.com",
         avatarUrl: String = "http://monster.com/avatar",
