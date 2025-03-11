@@ -12,14 +12,14 @@ class CreateMonsterDtoFactory(
         url: String? = null,
         avatarUrl: String? = null,
         description: String = "I am a Monster",
-        size: String = "MEDIUM",
-        alignment: String = "NEUTRAL",
+        size: Size = Size.MEDIUM,
+        alignment: Alignment = Alignment.NEUTRAL,
         stats: StatDto = statDtoFactory.create(),
         armorClass: Long = 10,
         challengeRatingId: Long = 1,
-        environments: Set<String> = emptySet(),
+        environments: Set<Environment> = emptySet(),
         languages: Set<String> = emptySet(),
-        type: String = "BEAST",
+        type: MonsterType = MonsterType.BEAST,
     ): CreateMonsterDto {
         return createInternal(
             {}, CreateMonsterDto(

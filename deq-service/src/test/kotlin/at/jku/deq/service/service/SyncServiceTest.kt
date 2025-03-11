@@ -38,7 +38,7 @@ class SyncServiceTest {
         fun `test basic sync`() {
             // given
             val retrievedMonsters =
-                listOf(DEQ_FACTORY.create(name = "Big Bad Voodoo"), DEQ_FACTORY.create(name = "Rexxar"))
+                listOf(DEQ_FACTORY.create(name = "Big Bad Voodoo", id = 1), DEQ_FACTORY.create(name = "Rexxar", id = 2))
             every { monsterService.getAllMonsters() } returns retrievedMonsters
             every { monsterRepository.findAll() } returns emptyList()
             every { monsterRepository.deleteAll(emptyList()) } just runs
@@ -56,8 +56,8 @@ class SyncServiceTest {
                         .hasSize(2)
                         .usingRecursiveFieldByFieldElementComparatorOnFields(Monster::id.name, Monster::externalId.name)
                         .containsExactly(
-                            FACTORY.create(name = "Big Bad Voodoo"),
-                            FACTORY.create(name = "Rexxar")
+                            FACTORY.create(name = "Big Bad Voodoo", externalId = 1),
+                            FACTORY.create(name = "Rexxar", externalId = 2)
                         )
                 })
             }
@@ -123,13 +123,18 @@ class SyncServiceTest {
         }
 
         @Test
-        fun `test sync - overwrite existing monster`(){
+        fun `test sync - overwrite existing monster`() {
             // given
             val retrievedMonsters = listOf(
                 DEQ_FACTORY.create(id = 1L, name = "Big Bad Voodoo"),
             )
             every { monsterService.getAllMonsters() } returns retrievedMonsters
-            every { monsterRepository.findAll() } returns listOf(FACTORY.create(externalId = 1L, name = "Small Good Voodoo"))
+            every { monsterRepository.findAll() } returns listOf(
+                FACTORY.create(
+                    externalId = 1L,
+                    name = "Small Good Voodoo"
+                )
+            )
 
             every { monsterRepository.deleteAll(any()) } just runs
 
